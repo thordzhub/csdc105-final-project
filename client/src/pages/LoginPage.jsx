@@ -29,8 +29,10 @@ export default function LoginPage() {
     return <Navigate to={'/'} />
   }
   return (
+    <div className="form-container">
     <form className="login" onSubmit={login}>
       <h1>Login</h1>
+      <h3>Sign in now to upload blogs!</h3>
       <input type="text"
              placeholder="username"
              value={username}
@@ -41,5 +43,6 @@ export default function LoginPage() {
              onChange={ev => setPassword(ev.target.value)}/>
       <button>Login</button>
     </form>
+    </div>
   );
 }

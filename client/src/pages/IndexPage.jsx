@@ -12,6 +12,7 @@ export default function IndexPage() {
   }, []);
   return (
     <>
+      <h1>Latest Blogs</h1>
       {posts.length > 0 && posts.map(post => (
         <Post {...post} />
       ))}
