@@ -170,5 +170,30 @@ app.get('/my-posts', async (req, res) => {
   }
 });
 
+//[new feature] delete a blog posted by the logged in user
+app.delete('/post/:id', async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    const info = jwt.verify(token, secret);
+
+    const postDoc = await Post.findById(req.params.id);
+    if (!postDoc) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    // Ensure only the author can delete
+    if (postDoc.author.toString() !== info.id) {
+      return res.status(403).json({ error: 'Unauthorized: not the author' });
+    }
+
+    await postDoc.deleteOne();
+    res.json({ message: 'Post deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to delete post' });
+  }
+});
+
+
 //start the server 'localhost:4000'
 app.listen(4000);
