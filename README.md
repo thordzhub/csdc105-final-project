@@ -35,9 +35,32 @@ This is a blog application built using the **MERN** stack:
 - Handles routes like `/register`, `/login`, `/logout`, `/profile`, `/post`, etc.
 - Connects to MongoDB and manages user sessions using cookies
 
-### ⚙️ How to Run
+## ⚙️ How to Run
+
+> ✅ Make sure you have **Node.js**, **npm**, and **MongoDB** installed before running the app.
 
 1. **Clone the repository**
+
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/thordzhub/csdc105-final-project.git
+   cd csdc105-final-project
+
+2. **Install the dependencies**
+    ```bash
+    cd api
+    npm install
+    
+    cd ../client
+    npm install
+
+3. **Run backend and frontend servers**
+    ```bash
+    cd ../api
+    node index
+
+    cd ../client
+    npm run dev
+
+4. **Go to your browser then add this in the search bar**
+    - http://localhost:4000 [for the backend]
+    - http://localhost:5173 [for the frontend]
