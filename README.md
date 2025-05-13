@@ -61,6 +61,6 @@ This is a blog application built using the **MERN** stack:
     cd ../client
     npm run dev
 
-4. **Go to your browser then add this in the search bar**
+4. **Open your browser and enter each of the following links in separate tabs:**
     - http://localhost:4000 [for the backend]
     - http://localhost:5173 [for the frontend]
