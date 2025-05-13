@@ -1,26 +1,29 @@
 import {useContext, useEffect, useState} from "react";
-import {useParams, useNavigate} from "react-router-dom"; // ← added useNavigate
-import {formatISO9075} from "date-fns";
-import {UserContext} from "../UserContext";
-import {Link} from 'react-router-dom';
+import {useParams, useNavigate} from "react-router-dom"; //used to get the post ID and redirect
+import {formatISO9075} from "date-fns"; // formats the date nicely
+import {UserContext} from "../UserContext"; //gets info about the logged-in user
+import {Link} from 'react-router-dom'; // allows navigation via links
 
 export default function PostPage() {
-  const [postInfo, setPostInfo] = useState(null);
-  const {userInfo} = useContext(UserContext);
-  const {id} = useParams();
-  const navigate = useNavigate(); // ← added this
+  const [postInfo, setPostInfo] = useState(null); //holds the fetched post data
+  const {userInfo} = useContext(UserContext); // get current logged-in user info
+  const {id} = useParams(); // get post ID from the URL
+  const navigate = useNavigate(); // used to navigate (like after delete)
 
+  // Fetch the post data when the component loads
   useEffect(() => {
     fetch(`http://localhost:4000/post/${id}`)
       .then(response => {
         response.json().then(postInfo => {
-          setPostInfo(postInfo);
+          setPostInfo(postInfo); // save the post info to state
         });
       });
   }, []);
 
+  //show nothing if the post hasn't load yet
   if (!postInfo) return '';
 
+  // Handle deleting the post
   const handleDelete = () => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
 
@@ -43,8 +46,14 @@ export default function PostPage() {
   return (
     <div className="post-page">
       <h1>{postInfo.title}</h1>
+      
+      {/* Show the formatted creation date */}
       <time>{formatISO9075(new Date(postInfo.createdAt))}</time>
+      
+      {/* Show the author's username */}
       <div className="author">by @{postInfo.author.username}</div>
+
+      {/* Show edit/delete buttons only if current user is the post author */}
       {userInfo.id === postInfo.author._id && (
         <div className="edit-row">
           <Link className="edit-btn" to={`/edit/${postInfo._id}`}>
@@ -62,9 +71,13 @@ export default function PostPage() {
           </button>
         </div>
       )}
+
+      {/* Show the cover image */}
       <div className="image">
         <img src={`http://localhost:4000/${postInfo.cover}`} alt=""/>
       </div>
+
+      {/* Render the post content as HTML */}
       <div className="content" dangerouslySetInnerHTML={{__html:postInfo.content}} />
     </div>
   );

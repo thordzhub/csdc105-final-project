@@ -1,3 +1,5 @@
+// NOT ANYMORE NEEDED SINCE WE USED VITE. THIS IS ONLY FOR CREATE-REACT-APP
+
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
